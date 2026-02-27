@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BackButton from '../../components/BackButton.astro';
+import { getCollection } from 'astro:content';
+import { formatDate } from '../../utils/date';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes');
+  return notes.map((note) => ({
+    params: { slug: note.slug },
+    props: { note },
+  }));
+}
+
+const { note } = Astro.props;
+const { Content } = await note.render();
+const dateFormatted = formatDate(note.data.date, 'full');
+---
+
+<BaseLayout title={note.data.title} description={note.data.description}>
+  <div class="max-w-3xl mx-auto pt-8 pb-20">
+    <BackButton />
+
+    <article class="bujo-box">
+      <header class="bujo-header-box p-8 md:p-12 bg-black text-white text-center">
+        <div class="font-mono text-sm tracking-[0.3em] uppercase mb-6 border-b border-white/30 pb-4 inline-block">
+          Запись // {dateFormatted}
+        </div>
+        <h1 class="font-display font-black uppercase text-3xl md:text-5xl leading-tight mb-6">
+          {note.data.title}
+        </h1>
+        <div class="flex justify-center flex-wrap gap-3">
+          {note.data.tags.map((tag: string) => (
+            <span class="font-mono text-xs border border-white px-3 py-1 bg-white text-black font-bold">
+              #{tag}
+            </span>
+          ))}
+        </div>
+      </header>
+
+      <div class="p-8 md:p-12 prose prose-black max-w-none">
+        <Content />
+      </div>
+    </article>
+  </div>
+</BaseLayout>
