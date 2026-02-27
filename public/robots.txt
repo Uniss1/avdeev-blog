@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://uniss1.github.io/avdeev-blog/sitemap-index.xml

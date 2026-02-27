@@ -7,16 +7,20 @@ interface Props {
   title: string;
   description?: string;
   ogImage?: string;
+  type?: 'website' | 'article';
+  publishedDate?: Date;
+  noindex?: boolean;
 }
 
-const { title, description, ogImage } = Astro.props;
+const { title, description, ogImage, type, publishedDate, noindex } = Astro.props;
 ---
 
 <html lang="ru">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <SEOHead title={title} description={description} ogImage={ogImage} />
+    <SEOHead title={title} description={description} ogImage={ogImage} type={type} publishedDate={publishedDate} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
   </head>
   <body class="min-h-screen flex flex-col md:flex-row antialiased font-sans">
     <Sidebar />

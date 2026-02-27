@@ -7,7 +7,7 @@ const notes = (await getCollection('notes'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
-<BaseLayout title="Все записи">
+<BaseLayout title="Все записи" description="Все технические записи: BI-оптимизация, AI-агенты, пайплайны данных и архитектурные решения.">
   <div class="max-w-4xl mx-auto pt-8">
     <div class="mb-12 text-center">
       <h1 class="font-display font-black uppercase text-4xl md:text-5xl text-black inline-block border-b-4 border-black pb-2 px-8">

@@ -17,7 +17,7 @@ const { Content } = await note.render();
 const dateFormatted = formatDate(note.data.date, 'full');
 ---
 
-<BaseLayout title={note.data.title} description={note.data.description}>
+<BaseLayout title={note.data.title} description={note.data.description} type="article" publishedDate={note.data.date}>
   <div class="max-w-3xl mx-auto pt-8 pb-20">
     <BackButton />
 
