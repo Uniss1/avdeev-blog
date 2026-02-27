@@ -1,0 +1,63 @@
+---
+import { getCollection } from 'astro:content';
+import TagBadge from './TagBadge.astro';
+
+const notes = await getCollection('notes');
+const allTags = [...new Set(notes.flatMap((note) => note.data.tags))].sort();
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+
+<aside class="w-full md:w-72 md:h-screen md:sticky md:top-0 border-r-0 md:border-r-2 border-b-2 md:border-b-0 border-black bg-white/95 flex flex-col z-20 relative shrink-0">
+  <div class="p-8 flex-1 overflow-y-auto">
+
+    <!-- Заголовок (div, НЕ h1 — MAJ-1) -->
+    <div class="mb-12 text-center bujo-header-box pb-6">
+      <div class="font-display font-black uppercase text-4xl text-black mb-2 tracking-tight">
+        Индекс
+      </div>
+      <p class="font-mono text-[10px] tracking-[0.2em] uppercase font-bold">
+        Техническая База Знаний
+      </p>
+    </div>
+
+    <!-- Навигация -->
+    <nav class="space-y-10">
+      <div class="bujo-box">
+        <div class="bujo-header-box bg-black text-white p-2 text-center font-display font-bold uppercase text-lg tracking-wider">
+          Навигация
+        </div>
+        <ul class="p-4 space-y-3 font-mono text-sm">
+          <li>
+            <a href={base} class="w-full flex items-center justify-between group hover:font-bold">
+              <span>Обзор</span>
+              <span class="text-xs group-hover:text-black">01</span>
+            </a>
+          </li>
+          <li>
+            <a href={`${base}notes/`} class="w-full flex items-center justify-between group hover:font-bold">
+              <span>Все записи</span>
+              <span class="text-xs group-hover:text-black">02</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Облако тегов -->
+      <div class="bujo-box">
+        <div class="bujo-header-box p-2 text-center font-display font-bold uppercase text-lg tracking-wider">
+          Темы
+        </div>
+        <div class="p-4 flex flex-col gap-2 font-mono text-sm">
+          {allTags.map((tag) => (
+            <TagBadge tag={tag} />
+          ))}
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Подвал -->
+  <div class="p-6 border-t-2 border-black font-mono text-[10px] text-center uppercase tracking-widest font-bold bg-white">
+    Публичный Ресурс
+  </div>
+</aside>
