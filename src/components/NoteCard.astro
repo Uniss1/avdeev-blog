@@ -1,0 +1,39 @@
+---
+import TagBadge from './TagBadge.astro';
+import { formatDate } from '../utils/date';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  note: CollectionEntry<'notes'>;
+}
+
+const { note } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const dateShort = formatDate(note.data.date, 'short');
+const year = note.data.date.getFullYear();
+---
+
+<a
+  href={`${base}notes/${note.slug}/`}
+  class="bujo-box p-0 group hover:bg-black hover:text-white transition-colors duration-200 flex flex-col md:flex-row block"
+>
+  <!-- Блок с датой -->
+  <div class="md:w-32 p-6 md:border-r-2 border-b-2 md:border-b-0 border-black flex flex-col justify-center items-center group-hover:border-white">
+    <span class="font-display font-bold text-3xl">{dateShort}</span>
+    <span class="font-mono text-xs uppercase tracking-widest mt-2">{year}</span>
+  </div>
+
+  <!-- Блок с контентом -->
+  <div class="flex-1 p-6 md:px-8 flex flex-col justify-center">
+    <h3 class="font-sans font-bold text-2xl mb-2 group-hover:underline decoration-2 underline-offset-4">
+      {note.data.title}
+    </h3>
+    <div class="flex flex-wrap gap-2 mt-2">
+      {note.data.tags.map((tag: string) => (
+        <span class="font-mono text-xs border border-current px-2 py-0.5">
+          {tag}
+        </span>
+      ))}
+    </div>
+  </div>
+</a>
