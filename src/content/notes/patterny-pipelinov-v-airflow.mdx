@@ -1,0 +1,30 @@
+---
+title: "Паттерны пайплайнов в Airflow"
+date: 2024-04-20
+category: "Инженерия"
+tags: ["Пайплайны-данных", "ETL", "Airflow"]
+type: "Лучшая практика"
+description: "Обеспечение идемпотентности в ежедневных загрузках (ETL)."
+---
+
+Обеспечение идемпотентности в ежедневных загрузках (ETL).
+
+<div class="bujo-box mb-8">
+  <div class="bg-black text-white p-2 text-center font-display font-bold uppercase text-lg tracking-widest">Чек-лист</div>
+  <div class="p-6">
+    <ul class="space-y-4 font-mono text-sm">
+      <li class="flex items-center gap-3">
+        <div class="w-4 h-4 border-2 border-black flex items-center justify-center font-bold text-xs">X</div>
+        Использовать logical_date вместо datetime.now()
+      </li>
+      <li class="flex items-center gap-3">
+        <div class="w-4 h-4 border-2 border-black flex items-center justify-center font-bold text-xs">X</div>
+        Паттерн DELETE-INSERT перед загрузкой
+      </li>
+      <li class="flex items-center gap-3">
+        <div class="w-4 h-4 border-2 border-black"></div>
+        По умолчанию Catchup=False
+      </li>
+    </ul>
+  </div>
+</div>
