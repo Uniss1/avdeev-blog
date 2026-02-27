@@ -1,0 +1,50 @@
+project: avdeev.blog
+current_iteration: 1
+current_stage: 10
+started: 2026-02-27
+history:
+  - stage: 1
+    role: Product Analyst
+    artifact: 01-product-analysis.md
+    date: 2026-02-27
+    status: approved
+  - stage: 2
+    role: Backlog Designer
+    artifact: 02-backlog-and-concept.md
+    date: 2026-02-27
+    status: approved
+  - stage: 3
+    role: Architect
+    artifact: 03-architecture.md
+    date: 2026-02-27
+    status: approved
+  - stage: 4
+    role: UX Prototyper
+    artifact: 04-ux-prototype.md
+    date: 2026-02-27
+    status: approved
+  - stage: 5
+    role: Spec Writer
+    artifact: 05-specifications.md
+    date: 2026-02-27
+    status: approved
+  - stage: 6
+    role: Tech Spec Writer
+    artifact: 06-tech-specs.md
+    date: 2026-02-27
+    status: approved
+  - stage: 7
+    role: QA Tester
+    artifact: 07-qa-report.md
+    date: 2026-02-27
+    status: approved
+  - stage: 8
+    role: Release Manager
+    artifact: 08-release-plan.md
+    date: 2026-02-27
+    status: approved
+  - stage: 9
+    role: Release Engineer
+    artifact: 09-release-report.md
+    date: 2026-02-27
+    status: approved
