@@ -14,7 +14,7 @@ export async function GET(context: { site: URL }) {
       title: note.data.title,
       pubDate: note.data.date,
       description: note.data.description ?? '',
-      link: `/avdeev-blog/notes/${note.slug}/`,
+      link: `/notes/${note.slug}/`,
     })),
   });
 }
