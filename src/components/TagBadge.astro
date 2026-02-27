@@ -1,0 +1,18 @@
+---
+import { transliterate } from '../utils/transliterate';
+
+interface Props {
+  tag: string;
+}
+
+const { tag } = Astro.props;
+const tagSlug = transliterate(tag);
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+
+<a
+  href={`${base}tags/${tagSlug}/`}
+  class="font-mono text-xs border border-current px-2 py-0.5 hover:bg-black hover:text-white transition-colors"
+>
+  #{tag}
+</a>
