@@ -82,3 +82,89 @@ body {
   background-color: #000;
   color: #fff;
 }
+
+/* Блоки кода Shiki — монохромный bujo-стиль */
+.prose pre {
+  border: 2px solid #000;
+  border-radius: 0;
+  background-color: #fff !important;
+  padding: 0;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  overflow: hidden;
+}
+
+.prose pre > code {
+  display: block;
+  padding: 1.25rem 1.5rem;
+  overflow-x: auto;
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.85em;
+  line-height: 1.7;
+  background: none;
+  border: none;
+}
+
+/* Скроллбар внутри блоков кода */
+.prose pre code::-webkit-scrollbar {
+  height: 4px;
+}
+
+.prose pre code::-webkit-scrollbar-thumb {
+  background: #000;
+}
+
+/* Заголовок блока кода (имя файла) — bujo-header */
+.bujo-box > .bg-black + pre,
+.prose .code-title + pre {
+  margin-top: 0;
+  border-top: none;
+}
+
+.code-title {
+  background-color: #000;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border: 2px solid #000;
+  border-bottom: none;
+}
+
+/* Адаптивная верстка — mobile-first */
+@media (max-width: 767px) {
+  /* Минимальный размер шрифта */
+  body {
+    font-size: 16px;
+  }
+
+  /* Touch targets >= 44px */
+  a, button, summary, [role="button"] {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Inline-ссылки внутри текста — не ломать layout */
+  .prose a,
+  p a,
+  li a,
+  span a {
+    min-height: auto;
+    display: inline;
+  }
+
+  /* Блоки кода — горизонтальный скролл */
+  pre {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* bujo-box не выходит за пределы экрана */
+  .bujo-box {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}
