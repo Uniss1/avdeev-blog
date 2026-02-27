@@ -1,0 +1,27 @@
+---
+import SEOHead from '../components/SEOHead.astro';
+import Sidebar from '../components/Sidebar.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const { title, description, ogImage } = Astro.props;
+---
+
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <SEOHead title={title} description={description} ogImage={ogImage} />
+  </head>
+  <body class="min-h-screen flex flex-col md:flex-row antialiased font-sans">
+    <Sidebar />
+    <main class="flex-1 overflow-x-hidden px-6 md:px-12 lg:px-20 pb-24 pt-12">
+      <slot />
+    </main>
+  </body>
+</html>
