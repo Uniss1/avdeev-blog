@@ -1,0 +1,28 @@
+---
+title: "Локальные LLM-агенты для анализа документов"
+date: 2024-05-10
+category: "AI"
+tags: ["AI-Агенты", "LLM", "Python"]
+type: "Эксперимент"
+description: "RAG-пайплайн, который не отправляет корпоративные данные во внешние API."
+metrics:
+  label: "Токенов/Сек"
+  value: 45
+---
+
+Цель: Создать RAG-пайплайн, который не отправляет корпоративные данные во внешние API.
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <div class="bujo-box p-4">
+    <div class="text-center font-display font-bold uppercase text-sm md:text-base border-b-2 border-black pb-2 mb-4">Технологический стек</div>
+    <ul class="font-mono text-sm space-y-2">
+      <li>- Ollama (Llama 3 8B)</li>
+      <li>- LangChain</li>
+      <li>- ChromaDB</li>
+    </ul>
+  </div>
+  <div class="bujo-box p-4">
+    <div class="text-center font-display font-bold uppercase text-sm md:text-base border-b-2 border-black pb-2 mb-4">Результат</div>
+    <p class="font-sans text-sm text-center mt-4">Скорость ~45 ток/с на M2 Max. Достаточно для комфортного чтения.</p>
+  </div>
+</div>
