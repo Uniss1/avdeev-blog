@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NoteCard from '../../components/NoteCard.astro';
+import { getCollection } from 'astro:content';
+
+const notes = (await getCollection('notes'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="Все записи">
+  <div class="max-w-4xl mx-auto pt-8">
+    <div class="mb-12 text-center">
+      <h1 class="font-display font-black uppercase text-4xl md:text-5xl text-black inline-block border-b-4 border-black pb-2 px-8">
+        Все записи
+      </h1>
+    </div>
+
+    <div class="space-y-6">
+      {notes.map((note) => (
+        <NoteCard note={note} />
+      ))}
+    </div>
+  </div>
+</BaseLayout>
