@@ -4,7 +4,8 @@ import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 
 export default defineConfig({
-  site: 'https://avdeev.blog',
+  site: 'https://uniss1.github.io',
+  base: '/avdeev-blog',
   integrations: [
     tailwind(),
     mdx(),
