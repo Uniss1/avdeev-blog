@@ -1,0 +1,57 @@
+---
+import { SITE_NAME, SITE_DESCRIPTION, SITE_URL, DEFAULT_OG_IMAGE } from '../consts';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  type?: 'website' | 'article';
+  publishedDate?: Date;
+}
+
+const {
+  title,
+  description = SITE_DESCRIPTION,
+  ogImage = DEFAULT_OG_IMAGE,
+  type = 'website',
+  publishedDate,
+} = Astro.props;
+
+const pageTitle = `${title} | ${SITE_NAME}`;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(ogImage, Astro.site);
+
+const jsonLd = type === 'article' && publishedDate
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: title,
+      description,
+      datePublished: publishedDate.toISOString(),
+      url: canonicalURL.href,
+      author: { '@type': 'Person', name: 'Avdeev' },
+    }
+  : {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: SITE_NAME,
+      description,
+      url: SITE_URL,
+    };
+---
+
+<title>{pageTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL.href} />
+
+<!-- Open Graph -->
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content={type === 'article' ? 'article' : 'website'} />
+<meta property="og:url" content={canonicalURL.href} />
+<meta property="og:image" content={ogImageURL.href} />
+<meta property="og:locale" content="ru_RU" />
+<meta property="og:site_name" content={SITE_NAME} />
+
+<!-- JSON-LD -->
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
