@@ -4,7 +4,6 @@ import TagBadge from './TagBadge.astro';
 
 const notes = await getCollection('notes');
 const allTags = [...new Set(notes.flatMap((note) => note.data.tags))].sort();
-const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
 
 <!-- Desktop: статичный sidebar -->
@@ -26,13 +25,13 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
         </div>
         <ul class="p-4 space-y-3 font-mono text-sm">
           <li>
-            <a href={base} class="w-full flex items-center justify-between group hover:font-bold min-h-[44px]">
+            <a href="/" class="w-full flex items-center justify-between group hover:font-bold min-h-[44px]">
               <span>Обзор</span>
               <span class="text-xs group-hover:text-black">01</span>
             </a>
           </li>
           <li>
-            <a href={`${base}notes/`} class="w-full flex items-center justify-between group hover:font-bold min-h-[44px]">
+            <a href="/notes/" class="w-full flex items-center justify-between group hover:font-bold min-h-[44px]">
               <span>Все записи</span>
               <span class="text-xs group-hover:text-black">02</span>
             </a>
@@ -85,13 +84,13 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
         </div>
         <ul class="p-4 space-y-1 font-mono text-sm">
           <li>
-            <a href={base} class="w-full flex items-center justify-between group hover:font-bold min-h-[44px] py-2">
+            <a href="/" class="w-full flex items-center justify-between group hover:font-bold min-h-[44px] py-2">
               <span>Обзор</span>
               <span class="text-xs group-hover:text-black">01</span>
             </a>
           </li>
           <li>
-            <a href={`${base}notes/`} class="w-full flex items-center justify-between group hover:font-bold min-h-[44px] py-2">
+            <a href="/notes/" class="w-full flex items-center justify-between group hover:font-bold min-h-[44px] py-2">
               <span>Все записи</span>
               <span class="text-xs group-hover:text-black">02</span>
             </a>
