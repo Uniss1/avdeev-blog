@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
 
 <BaseLayout title="404" noindex>
@@ -17,7 +16,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
         Запрашиваемый ресурс не существует в базе знаний
       </div>
       <a
-        href={base}
+        href="/"
         class="mt-10 inline-flex items-center gap-2 font-mono text-sm border-2 border-black px-6 py-3 hover:bg-black hover:text-white transition-colors font-bold uppercase tracking-wider min-h-[44px]"
       >
         Вернуться на главную
