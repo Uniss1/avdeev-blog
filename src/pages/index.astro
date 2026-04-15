@@ -3,36 +3,90 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { formatDate } from '../utils/date';
 
-const notes = (await getCollection('notes'))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 10);
+const allNotes = (await getCollection('notes'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const notes = allNotes.slice(0, 10);
+const tagCount = new Set(allNotes.flatMap((note) => note.data.tags)).size;
+const firstYear = allNotes.at(-1)?.data.date.getFullYear();
+const lastYear = allNotes[0]?.data.date.getFullYear();
+const yearRange = firstYear && lastYear && firstYear !== lastYear
+  ? `${firstYear}-${lastYear}`
+  : `${lastYear ?? ''}`;
 ---
 
 <BaseLayout title="Обзор" description="Публичная техническая база знаний: архитектурные решения, оптимизация, пайплайны данных, AI-агенты.">
-  <div class="max-w-5xl mx-auto">
-    <div class="mb-12 text-center">
-      <h1 class="font-display font-black uppercase tracking-tight text-5xl md:text-7xl text-black">
-        Обзор
-      </h1>
-    </div>
+  <div class="max-w-6xl mx-auto space-y-8 md:space-y-10">
+    <section class="grid gap-6 xl:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)] xl:items-start">
+      <div data-home-intro class="space-y-6">
+        <div class="inline-flex items-center gap-3 border-2 border-black bg-white/90 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.28em]">
+          Публичный Выпуск
+          <span class="inline-flex h-2.5 w-2.5 rounded-full bg-black"></span>
+        </div>
 
-    <div class="bujo-box">
-      <div class="bujo-header-box p-3 text-center">
-        <h2 class="font-display font-bold uppercase text-2xl tracking-wide">Недавние записи</h2>
+        <div class="space-y-4">
+          <h1 class="font-display font-black uppercase tracking-tight text-5xl sm:text-6xl md:text-7xl text-black leading-[0.9]">
+            Обзор
+          </h1>
+          <p class="max-w-2xl font-sans text-base sm:text-lg md:text-xl leading-relaxed text-black/75">
+            Технический индекс по BI, AI и инженерным практикам: короткие разборы, рабочие паттерны и заметки без маркетинговой шелухи.
+          </p>
+        </div>
+
+        <div data-home-metrics class="grid gap-3 sm:grid-cols-3">
+          <div class="bujo-box p-4">
+            <div class="font-mono text-[10px] uppercase tracking-[0.22em] text-black/60">Записей</div>
+            <div class="mt-3 font-display text-3xl leading-none">{allNotes.length}</div>
+          </div>
+          <div class="bujo-box p-4">
+            <div class="font-mono text-[10px] uppercase tracking-[0.22em] text-black/60">Тем</div>
+            <div class="mt-3 font-display text-3xl leading-none">{tagCount}</div>
+          </div>
+          <div class="bujo-box p-4">
+            <div class="font-mono text-[10px] uppercase tracking-[0.22em] text-black/60">Период</div>
+            <div class="mt-3 font-display text-3xl leading-none">{yearRange}</div>
+          </div>
+        </div>
       </div>
-      <div class="p-6">
-        <ul class="space-y-4 font-sans font-medium">
-          {notes.map((note) => (
-            <li>
+
+      <aside class="bujo-panel-inverse p-6 sm:p-8">
+        <div class="font-mono text-[10px] uppercase tracking-[0.28em] text-white/60">Фокус</div>
+        <h2 class="mt-4 font-display text-3xl sm:text-4xl leading-[0.95] uppercase">
+          Практика вместо шума
+        </h2>
+        <ul class="mt-6 space-y-4 font-sans text-sm sm:text-base leading-relaxed text-white/80">
+          <li class="border-t border-white/20 pt-4">Оптимизация BI-процессов и тяжёлых отчётов.</li>
+          <li class="border-t border-white/20 pt-4">AI-инструменты и локальные агентные сценарии.</li>
+          <li class="border-t border-white/20 pt-4">Архитектурные решения, которые реально выдерживают нагрузку.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="bujo-box overflow-hidden">
+      <div class="bujo-header-box grid gap-4 px-5 py-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-end sm:px-6">
+        <div>
+          <div class="font-mono text-[10px] uppercase tracking-[0.24em] text-black/60">Последние Материалы</div>
+          <h2 class="mt-2 font-display font-bold uppercase text-2xl sm:text-3xl tracking-wide">Недавние записи</h2>
+        </div>
+        <p class="max-w-md font-sans text-sm leading-relaxed text-black/70">
+          Быстрый вход в последние темы без лишних переходов по разделам.
+        </p>
+      </div>
+      <div class="p-5 sm:p-6">
+        <ul class="divide-y-2 divide-black/10 font-sans font-medium">
+          {notes.map((note, index) => (
+            <li class="first:pt-0">
               <a
                 href={`/notes/${note.slug}/`}
-                class="flex items-center gap-4 group min-h-[44px] py-1"
+                class="group grid gap-3 py-4 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-center"
               >
-                <div class="w-3 h-3 rounded-full bg-black group-hover:scale-150 transition-transform flex-shrink-0"></div>
-                <span class="flex-1 group-hover:underline decoration-2 underline-offset-4">
+                <span class="font-mono text-[10px] uppercase tracking-[0.24em] text-black/50">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <span class="text-base sm:text-lg leading-snug group-hover:underline decoration-2 underline-offset-4">
                   {note.data.title}
                 </span>
-                <span class="font-mono text-sm border-b-2 border-black pb-0.5">
+                <span class="font-mono text-sm border-b-2 border-black pb-0.5 justify-self-start sm:justify-self-end">
                   {formatDate(note.data.date, 'short')}
                 </span>
               </a>
@@ -40,6 +94,6 @@ const notes = (await getCollection('notes'))
           ))}
         </ul>
       </div>
-    </div>
+    </section>
   </div>
 </BaseLayout>

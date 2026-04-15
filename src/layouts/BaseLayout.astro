@@ -24,8 +24,10 @@ const { title, description, ogImage, type, publishedDate, noindex } = Astro.prop
   </head>
   <body class="min-h-screen flex flex-col md:flex-row antialiased font-sans">
     <Sidebar />
-    <main class="flex-1 overflow-x-hidden px-6 md:px-12 lg:px-20 pb-24 pt-12">
-      <slot />
+    <main class="page-main flex-1 overflow-x-hidden px-4 sm:px-6 md:px-10 lg:px-14 xl:px-20 pb-16 md:pb-24 pt-6 sm:pt-8 md:pt-12">
+      <div class="page-shell">
+        <slot />
+      </div>
     </main>
   </body>
 </html>
