@@ -3,4 +3,4 @@ export const SITE_DESCRIPTION = 'Заметки про 1С, ИИ, аналити
 export const SITE_URL = 'https://avdeev.blog';
 export const AUTHOR_NAME = 'Валентин Авдеев';
 export const AUTHOR_ROLE = 'Начальник отдела интеллектуальных систем и бизнес-аналитики';
-export const DEFAULT_OG_IMAGE = '/og-default.png';
+export const DEFAULT_OG_IMAGE = '/favicon.svg';
