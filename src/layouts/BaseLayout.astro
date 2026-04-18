@@ -1,6 +1,5 @@
 ---
 import SEOHead from '../components/SEOHead.astro';
-import Sidebar from '../components/Sidebar.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -10,24 +9,22 @@ interface Props {
   type?: 'website' | 'article';
   publishedDate?: Date;
   noindex?: boolean;
+  bodyClass?: string;
 }
 
-const { title, description, ogImage, type, publishedDate, noindex } = Astro.props;
+const { title, description, ogImage, type, publishedDate, noindex, bodyClass } = Astro.props;
 ---
 
+<!doctype html>
 <html lang="ru">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <SEOHead title={title} description={description} ogImage={ogImage} type={type} publishedDate={publishedDate} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="alternate" type="application/rss+xml" title={title} href="/rss.xml" />
   </head>
-  <body class="min-h-screen flex flex-col md:flex-row antialiased font-sans">
-    <Sidebar />
-    <main class="page-main flex-1 overflow-x-hidden px-4 sm:px-6 md:px-10 lg:px-14 xl:px-20 pb-16 md:pb-24 pt-6 sm:pt-8 md:pt-12">
-      <div class="page-shell">
-        <slot />
-      </div>
-    </main>
+  <body class={bodyClass}>
+    <slot />
   </body>
 </html>

@@ -1,26 +1,23 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-
+import { AUTHOR_NAME, AUTHOR_ROLE } from '../consts';
 ---
 
-<BaseLayout title="404" noindex>
-  <div class="max-w-3xl mx-auto flex flex-col items-center justify-center min-h-[60vh] text-center">
-    <div class="bujo-box p-12 md:p-20 w-full">
-      <div class="font-display font-black text-[8rem] md:text-[12rem] leading-none text-black tracking-tight">
-        404
-      </div>
-      <div class="mt-6 font-display font-bold uppercase text-xl md:text-2xl tracking-widest">
-        Страница не найдена
-      </div>
-      <div class="mt-4 font-mono text-sm opacity-60">
-        Запрашиваемый ресурс не существует в базе знаний
-      </div>
-      <a
-        href="/"
-        class="mt-10 inline-flex items-center gap-2 font-mono text-sm border-2 border-black px-6 py-3 hover:bg-black hover:text-white transition-colors font-bold uppercase tracking-wider min-h-[44px]"
-      >
-        Вернуться на главную
-      </a>
+<BaseLayout title="Страница не найдена" noindex>
+  <main class="page">
+    <div class="col">
+      <header class="me">
+        <h1><a href="/">{AUTHOR_NAME}</a></h1>
+        <p class="role">{AUTHOR_ROLE}</p>
+      </header>
+
+      <section>
+        <h2 class="sec-title">Страница не найдена</h2>
+        <div class="notfound">
+          <p class="notfound-code">404</p>
+          <p>Такой страницы здесь нет. Можно <a class="link" href="/">вернуться на главную</a>.</p>
+        </div>
+      </section>
     </div>
-  </div>
+  </main>
 </BaseLayout>

@@ -1,99 +1,183 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { formatDate } from '../utils/date';
+import { AUTHOR_NAME, AUTHOR_ROLE } from '../consts';
 
-const allNotes = (await getCollection('notes'))
+const notes = (await getCollection('notes'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-const notes = allNotes.slice(0, 10);
-const tagCount = new Set(allNotes.flatMap((note) => note.data.tags)).size;
-const firstYear = allNotes.at(-1)?.data.date.getFullYear();
-const lastYear = allNotes[0]?.data.date.getFullYear();
-const yearRange = firstYear && lastYear && firstYear !== lastYear
-  ? `${firstYear}-${lastYear}`
-  : `${lastYear ?? ''}`;
+const MONTHS_RU = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+const formatMonth = (d: Date) => `${MONTHS_RU[d.getMonth()]} ${d.getFullYear()}`;
+
+const previews = Object.fromEntries(
+  notes.map((n) => [
+    n.slug,
+    {
+      kicker: n.data.category,
+      title: n.data.title,
+      body: n.data.description ?? '',
+      l: formatMonth(n.data.date),
+      r: n.data.type,
+    },
+  ])
+);
+
+const currentYear = new Date().getFullYear();
 ---
 
-<BaseLayout title="Обзор" description="Публичная техническая база знаний: архитектурные решения, оптимизация, пайплайны данных, AI-агенты.">
-  <div class="max-w-6xl mx-auto space-y-8 md:space-y-10">
-    <section class="grid gap-6 xl:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)] xl:items-start">
-      <div data-home-intro class="space-y-6">
-        <div class="inline-flex items-center gap-3 border-2 border-black bg-white/90 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.28em]">
-          Публичный Выпуск
-          <span class="inline-flex h-2.5 w-2.5 rounded-full bg-black"></span>
-        </div>
+<BaseLayout title={AUTHOR_NAME}>
+  <main class="page">
+    <div class="col">
+      <header class="me">
+        <h1>{AUTHOR_NAME}</h1>
+        <p class="role">{AUTHOR_ROLE}</p>
+      </header>
 
-        <div class="space-y-4">
-          <h1 class="font-display font-black uppercase tracking-tight text-5xl sm:text-6xl md:text-7xl text-black leading-[0.9]">
-            Обзор
-          </h1>
-          <p class="max-w-2xl font-sans text-base sm:text-lg md:text-xl leading-relaxed text-black/75">
-            Технический индекс по BI, AI и инженерным практикам: короткие разборы, рабочие паттерны и заметки без маркетинговой шелухи.
-          </p>
-        </div>
-
-        <div data-home-metrics class="grid gap-3 sm:grid-cols-3">
-          <div class="bujo-box p-4">
-            <div class="font-mono text-[10px] uppercase tracking-[0.22em] text-black/60">Записей</div>
-            <div class="mt-3 font-display text-3xl leading-none">{allNotes.length}</div>
-          </div>
-          <div class="bujo-box p-4">
-            <div class="font-mono text-[10px] uppercase tracking-[0.22em] text-black/60">Тем</div>
-            <div class="mt-3 font-display text-3xl leading-none">{tagCount}</div>
-          </div>
-          <div class="bujo-box p-4">
-            <div class="font-mono text-[10px] uppercase tracking-[0.22em] text-black/60">Период</div>
-            <div class="mt-3 font-display text-3xl leading-none">{yearRange}</div>
-          </div>
-        </div>
-      </div>
-
-      <aside class="bujo-panel-inverse p-6 sm:p-8">
-        <div class="font-mono text-[10px] uppercase tracking-[0.28em] text-white/60">Фокус</div>
-        <h2 class="mt-4 font-display text-3xl sm:text-4xl leading-[0.95] uppercase">
-          Практика вместо шума
-        </h2>
-        <ul class="mt-6 space-y-4 font-sans text-sm sm:text-base leading-relaxed text-white/80">
-          <li class="border-t border-white/20 pt-4">Оптимизация BI-процессов и тяжёлых отчётов.</li>
-          <li class="border-t border-white/20 pt-4">AI-инструменты и локальные агентные сценарии.</li>
-          <li class="border-t border-white/20 pt-4">Архитектурные решения, которые реально выдерживают нагрузку.</li>
-        </ul>
-      </aside>
-    </section>
-
-    <section class="bujo-box overflow-hidden">
-      <div class="bujo-header-box grid gap-4 px-5 py-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-end sm:px-6">
-        <div>
-          <div class="font-mono text-[10px] uppercase tracking-[0.24em] text-black/60">Последние Материалы</div>
-          <h2 class="mt-2 font-display font-bold uppercase text-2xl sm:text-3xl tracking-wide">Недавние записи</h2>
-        </div>
-        <p class="max-w-md font-sans text-sm leading-relaxed text-black/70">
-          Быстрый вход в последние темы без лишних переходов по разделам.
+      <section>
+        <h2 class="sec-title">Сейчас</h2>
+        <p>
+          Веду отдел, который занимается ИИ, аналитикой и автоматизацией вокруг&nbsp;1С. Строю внутренние продукты —
+          от корпоративной вики с ассистентом до пайплайнов данных и дашбордов.
         </p>
+        <p>
+          Пишу сюда короткие заметки про то, как это всё устроено изнутри: архитектура, оптимизация, локальные LLM,
+          неочевидные грабли в пайплайнах.
+        </p>
+      </section>
+
+      {notes.length > 0 && (
+        <section>
+          <h2 class="sec-title">Статьи</h2>
+          <ul class="writing">
+            {notes.map((n) => (
+              <li>
+                <a href={`/notes/${n.slug}/`} data-preview={n.slug}>
+                  <span class="title">{n.data.title}</span>
+                  {n.data.description && <span class="desc">{n.data.description}</span>}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <section>
+        <h2 class="sec-title">Рассылка</h2>
+        <p>Раз в месяц — коротко о том, что строю и что читаю. Без спама.</p>
+        <form
+          class="newsletter-form"
+          onsubmit="event.preventDefault(); this.querySelector('button').textContent='Готово';"
+        >
+          <input type="email" placeholder="ваш email" required />
+          <button type="submit">Подписаться</button>
+        </form>
+      </section>
+
+      <section>
+        <h2 class="sec-title">Связь</h2>
+        <p>
+          Писать — <a class="link" href="mailto:hi@avdeev.blog">hi@avdeev.blog</a>.
+          Код на <a class="link" href="https://github.com/Uniss1">GitHub</a>,
+          подписаться на <a class="link" href="/rss.xml">RSS</a>.
+        </p>
+      </section>
+
+      <footer class="site-footer">© {currentYear} {AUTHOR_NAME}</footer>
+    </div>
+  </main>
+
+  <div class="preview" id="preview" aria-hidden="true">
+    <div class="preview-inner">
+      <div class="preview-kicker" id="pv-kicker">—</div>
+      <div class="preview-title" id="pv-title">—</div>
+      <div class="preview-body" id="pv-body">—</div>
+      <div class="preview-meta">
+        <span id="pv-meta-l">—</span>
+        <span id="pv-meta-r">—</span>
       </div>
-      <div class="p-5 sm:p-6">
-        <ul class="divide-y-2 divide-black/10 font-sans font-medium">
-          {notes.map((note, index) => (
-            <li class="first:pt-0">
-              <a
-                href={`/notes/${note.slug}/`}
-                class="group grid gap-3 py-4 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-center"
-              >
-                <span class="font-mono text-[10px] uppercase tracking-[0.24em] text-black/50">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <span class="text-base sm:text-lg leading-snug group-hover:underline decoration-2 underline-offset-4">
-                  {note.data.title}
-                </span>
-                <span class="font-mono text-sm border-b-2 border-black pb-0.5 justify-self-start sm:justify-self-end">
-                  {formatDate(note.data.date, 'short')}
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
+    </div>
   </div>
+
+  <script type="application/json" id="previews-data" set:html={JSON.stringify(previews)} />
+
+  <script is:inline>
+    (function () {
+      if (window.matchMedia('(hover: none)').matches) return;
+
+      const dataEl = document.getElementById('previews-data');
+      if (!dataEl) return;
+      const PREVIEWS = JSON.parse(dataEl.textContent || '{}');
+
+      const preview = document.getElementById('preview');
+      const pvKicker = document.getElementById('pv-kicker');
+      const pvTitle = document.getElementById('pv-title');
+      const pvBody = document.getElementById('pv-body');
+      const pvMetaL = document.getElementById('pv-meta-l');
+      const pvMetaR = document.getElementById('pv-meta-r');
+
+      let visible = false;
+      let targetX = 0, targetY = 0;
+      let x = 0, y = 0;
+      let raf = null;
+
+      function loop() {
+        x += (targetX - x) * 0.22;
+        y += (targetY - y) * 0.22;
+        preview.style.transform = `translate3d(${x}px, ${y}px, 0) scale(1)`;
+        if (visible && (Math.abs(targetX - x) > 0.2 || Math.abs(targetY - y) > 0.2)) {
+          raf = requestAnimationFrame(loop);
+        } else {
+          raf = null;
+        }
+      }
+
+      function positionFor(e) {
+        const w = 280, h = 170, pad = 18;
+        let px = e.clientX + pad;
+        let py = e.clientY + pad;
+        if (px + w + 12 > window.innerWidth) px = e.clientX - w - pad;
+        if (py + h + 12 > window.innerHeight) py = e.clientY - h - pad;
+        return { px, py };
+      }
+
+      function show(key, px, py) {
+        const data = PREVIEWS[key];
+        if (!data) return;
+        pvKicker.textContent = data.kicker || '';
+        pvTitle.textContent = data.title || '';
+        pvBody.textContent = data.body || '';
+        pvMetaL.textContent = data.l || '';
+        pvMetaR.textContent = data.r || '';
+        targetX = px;
+        targetY = py;
+        if (!visible) {
+          x = px;
+          y = py;
+          preview.style.transform = `translate3d(${x}px, ${y}px, 0) scale(.96)`;
+          requestAnimationFrame(() => preview.classList.add('show'));
+          visible = true;
+        }
+        if (!raf) loop();
+      }
+
+      function hide() {
+        preview.classList.remove('show');
+        visible = false;
+      }
+
+      document.querySelectorAll('[data-preview]').forEach((el) => {
+        el.addEventListener('mouseenter', (e) => {
+          const { px, py } = positionFor(e);
+          show(el.dataset.preview, px, py);
+        });
+        el.addEventListener('mousemove', (e) => {
+          const { px, py } = positionFor(e);
+          targetX = px;
+          targetY = py;
+          if (!raf) loop();
+        });
+        el.addEventListener('mouseleave', hide);
+      });
+    })();
+  </script>
 </BaseLayout>
