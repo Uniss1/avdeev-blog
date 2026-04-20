@@ -32,6 +32,7 @@ const dateLabel = `${d.getDate()} ${MONTHS_RU[d.getMonth()]} ${d.getFullYear()}`
   description={note.data.description}
   type="article"
   publishedDate={note.data.date}
+  markdownAlternate={`/notes/${note.slug}.md`}
 >
   <main class="page page-article">
     <div class="col col-article">

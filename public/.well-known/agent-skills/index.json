@@ -1,0 +1,25 @@
+{
+  "name": "avdeev.blog",
+  "description": "Notes by Valentin Avdeev on 1C, AI, LLM infrastructure, BI, and automation of corporate processes.",
+  "url": "https://avdeev.blog",
+  "skills": [
+    {
+      "name": "list-posts",
+      "type": "info",
+      "description": "Machine-readable list of all blog posts (XML sitemap index).",
+      "url": "https://avdeev.blog/sitemap-index.xml"
+    },
+    {
+      "name": "subscribe-feed",
+      "type": "info",
+      "description": "RSS feed of blog posts for agents that poll for new content.",
+      "url": "https://avdeev.blog/rss.xml"
+    },
+    {
+      "name": "read-post-markdown",
+      "type": "info",
+      "description": "Read any post as plain Markdown by appending .md to its URL (e.g. /notes/<slug>.md).",
+      "url": "https://avdeev.blog/notes/"
+    }
+  ]
+}

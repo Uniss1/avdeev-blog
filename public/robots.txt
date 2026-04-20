@@ -1,4 +1,29 @@
+# Default: allow search indexing and use as AI grounding context,
+# but disallow training.
 User-agent: *
+Content-Signal: search=yes, ai-train=no, ai-input=yes
+Allow: /
+
+# --- AI crawlers: explicit rules ---
+
+# OpenAI GPTBot — training crawler; blocked.
+User-agent: GPTBot
+Disallow: /
+
+# Common Crawl — widely used to build training corpora; blocked.
+User-agent: CCBot
+Disallow: /
+
+# Google-Extended — opt-out token for Gemini/Vertex training; blocked.
+User-agent: Google-Extended
+Disallow: /
+
+# Anthropic ClaudeBot — allowed (grounding/RAG use).
+User-agent: ClaudeBot
+Allow: /
+
+# Perplexity — allowed (answer attribution with links).
+User-agent: PerplexityBot
 Allow: /
 
 Sitemap: https://avdeev.blog/sitemap-index.xml

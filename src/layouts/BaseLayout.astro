@@ -10,9 +10,10 @@ interface Props {
   publishedDate?: Date;
   noindex?: boolean;
   bodyClass?: string;
+  markdownAlternate?: string;
 }
 
-const { title, description, ogImage, type, publishedDate, noindex, bodyClass } = Astro.props;
+const { title, description, ogImage, type, publishedDate, noindex, bodyClass, markdownAlternate } = Astro.props;
 ---
 
 <!doctype html>
@@ -23,6 +24,8 @@ const { title, description, ogImage, type, publishedDate, noindex, bodyClass } =
     <SEOHead title={title} description={description} ogImage={ogImage} type={type} publishedDate={publishedDate} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="alternate" type="application/rss+xml" title={title} href="/rss.xml" />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+    {markdownAlternate && <link rel="alternate" type="text/markdown" href={markdownAlternate} />}
   </head>
   <body class={bodyClass}>
     <slot />
