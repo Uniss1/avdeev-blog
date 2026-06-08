@@ -87,6 +87,8 @@ body {
 
 .col-article {
   width: var(--col-article);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @media (max-width: 900px) {
