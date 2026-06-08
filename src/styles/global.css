@@ -82,20 +82,14 @@ body {
 .col {
   width: var(--col);
   max-width: calc(100vw - 48px);
-  margin-left: var(--left);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .col-article {
   width: var(--col-article);
   margin-left: auto;
   margin-right: auto;
-}
-
-@media (max-width: 900px) {
-  .col {
-    margin-left: 0;
-    margin-right: auto;
-  }
 }
 
 /* Header */
